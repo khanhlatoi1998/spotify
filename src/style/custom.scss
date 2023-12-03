@@ -1,0 +1,11 @@
+.container {
+    max-width: 767px;
+    margin: 0 auto;
+}
+
+.noScroll {
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
+    }
+}

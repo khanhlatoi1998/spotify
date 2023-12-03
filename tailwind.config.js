@@ -1,0 +1,57 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'main': '#2DE0E0',
+        'background': '#171717',
+        border: '#ffffff54',
+        border_02: '#ffffff1c',
+        color_01: '#171717',
+        color_02: '#0B0F29',
+        color_03: '#20B65A',
+        color_04: '#f48525',
+        color_05: '#0072ff',
+        color_06: '#333',
+        color_07: '#eee',
+        color_08: '#252525',
+        color_09: '#acacac',
+        color_10: '#212121',
+        color_11: '#ffffff21',
+        color_12: '#acacac',
+        sale: '#acacac',
+        text: '#666666',
+        opacity_01: '#ffffff94'
+      },
+      fontSize: {
+        'title': '18px',
+        'title-lg': '21px',
+        '13': '13px',
+        'sm': '15px',
+        'md': '16px',
+        'lg': '17px',
+        'xl': '18px',
+        '2xl': '21px',
+        'full': '30px'
+      },
+      maxWidth: {
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1536px',
+      },
+      borderColor: {
+        border: '#ffffff54'
+      },
+      padding: {
+        header: '103px'
+      }
+    },
+  },
+  plugins: [],
+}
+
