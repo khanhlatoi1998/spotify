@@ -8,27 +8,14 @@ module.exports = {
       colors: {
         'main': '#2DE0E0',
         'background': '#171717',
-        border: '#ffffff54',
-        border_02: '#ffffff1c',
-        color_01: '#171717',
-        color_02: '#0B0F29',
-        color_03: '#20B65A',
-        color_04: '#f48525',
-        color_05: '#0072ff',
-        color_06: '#333',
-        color_07: '#eee',
-        color_08: '#252525',
-        color_09: '#acacac',
-        color_10: '#212121',
-        color_11: '#ffffff21',
-        color_12: '#acacac',
-        sale: '#acacac',
-        text: '#666666',
-        opacity_01: '#ffffff94'
+        'color-1': '#1E1E1E',
+        'color-2': '#E02D2D',
       },
       fontSize: {
-        'title': '18px',
+        'title': '16px',
         'title-lg': '21px',
+        'small-1': '12px',
+        'small-2': '10px',
         '13': '13px',
         'sm': '15px',
         'md': '16px',
@@ -49,6 +36,9 @@ module.exports = {
       },
       padding: {
         header: '103px'
+      },
+      opacity: {
+        'opa-1': '60%'
       }
     },
   },

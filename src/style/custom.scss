@@ -1,11 +1,18 @@
 .container {
-    max-width: 767px;
-    margin: 0 auto;
+  max-width: 767px;
+  margin: 0 auto;
 }
 
 .noScroll {
-    &::-webkit-scrollbar {
-        width: 0px;
-        background: transparent; /* make scrollbar transparent */
-    }
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
+}
+
+.container-grid {
+    display: grid;
+    grid-template-rows: auto auto; /* 2 rows of auto */
+    grid-auto-flow: column;  /* a column flow */
+    grid-auto-columns: 38%; /* each column will 38% of width */
 }
