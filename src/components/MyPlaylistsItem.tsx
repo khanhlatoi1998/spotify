@@ -1,11 +1,11 @@
-const TopRateItem = () => {
+const TopRateItem: React.FC<any> = ({track}) => {
     return (
         <div className="">
             <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
-                    <img className="w-[63px] h-[63px] rounded-full object-cover" src="https://i1.sndcdn.com/avatars-000702078199-txexxd-t500x500.jpg" alt="" />
-                    <div>
-                        <p className="font-semibold">Believer</p>
+                    <img className="w-[64px] h-[64px] rounded-full object-cover" src={track?.track.album.images[2].url} alt="" />
+                    <div className="max-w-[245px]">
+                        <p className="font-semibold">{track.track.name}</p>
                         <p className="opacity-opa-1 text-small-1">Imageine Dragon</p>
                     </div>
                 </div>

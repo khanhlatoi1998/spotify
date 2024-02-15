@@ -1,6 +1,32 @@
+import { useQuery } from "@tanstack/react-query";
 import BottomNav from "../components/BottomNav";
+import musicServices from "../api/musicServices";
 
 const Search = () => {
+    const { data: dataRecommendation } = useQuery({
+        queryKey: ['recommendation'],
+        queryFn: () => musicServices.getRecommendation('seed_genres=classical%2Ccountry%2Cchill', {
+            offset: 0,
+            limit: 7
+        }),
+        
+    });
+    const { data: dataDiscoveries } = useQuery({
+        queryKey: ['discoveries'],
+        queryFn: () => musicServices.getRecommendation('seed_genres=pop%2Ckpop%2Cchill', {
+            offset: 0,
+            limit: 20
+        }),
+    })
+    const { data: dataSearched } = useQuery({
+        queryKey: ['searched'],
+        queryFn: () => musicServices.getRecommendation('seed_genres=pop%2Cromance', {
+            offset: 0,
+            limit: 20
+        }),
+    })
+
+
     return (
         <div>
             {/* Search */}
@@ -20,18 +46,16 @@ const Search = () => {
             <div className="mt-6">
                 <p className="text-title font-semibold">Recommendation</p>
                 <div className="flex items-center gap-4 mt-4 overflow-scroll noScroll">
-                    <div className="bg-color-1 rounded-lg px-4 py-2 flex gap-2 items-center justify-center flex-shrink-0">
-                        <i className="fa-solid fa-music text-color-2"></i>
-                        <p className="opacity-opa-1">Tu hai kahan</p>
-                    </div>
-                    <div className="bg-color-1 rounded-lg px-4 py-2 flex gap-2 items-center justify-center flex-shrink-0">
-                        <i className="fa-solid fa-music text-color-2"></i>
-                        <p className="opacity-opa-1">Tu hai kahan</p>
-                    </div>
-                    <div className="bg-color-1 rounded-lg px-4 py-2 flex gap-2 items-center justify-center flex-shrink-0">
-                        <i className="fa-solid fa-music text-color-2"></i>
-                        <p className="opacity-opa-1">Tu hai kahan</p>
-                    </div>
+                    {
+                        dataRecommendation?.tracks?.map((track: any, idx: any) => {
+                            return (
+                                <div key={idx} className="bg-color-1 rounded-lg px-4 py-2 flex gap-2 items-center justify-center flex-shrink-0">
+                                    <i className="fa-solid fa-music text-color-2"></i>
+                                    <p className="opacity-opa-1">{track.name}</p>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
 
@@ -39,7 +63,7 @@ const Search = () => {
             <div className="bg-color-1 p-4 rounded-lg">
                 <div className="flex items-center justify-between">
                     <div className="font-semibold text-title">
-                        Top Searched Songs
+                        Top Songs
                         <i className="fa-solid fa-fire-flame-curved text-[#E02D2D] ml-2"></i>
                     </div>
                     <a href="/categories" className="text-main">
@@ -48,90 +72,26 @@ const Search = () => {
                     </a>
                 </div>
                 <div className="mt-3 flex flex-col gap-3 h-[258px] overflow-y-scroll noScroll">
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4 ">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <p className="font-semibold">1</p>
-                            <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
-                        </div>
-                        <img className="w-[40px] h-[40px] object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhSKLI28np2r2AwTAm8L10SNal702laKiDhRekpcc2UA&s" alt="" />
-                        <div>
-                            <p className=" font-semibold text-small-1">Worlds smallest Violin</p>
-                            <div className="flex gap-2 items-center mt-1">
-                                <i className="fa-solid fa-cloud-arrow-down text-main"></i>
-                                <p className="text-small-2 text-white">DJ Carlos Oliver</p>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        dataSearched?.tracks?.map((track: any, idx: number) => {
+                            return (
+                                <div key={idx} className="flex items-center gap-4">
+                                    <div>
+                                        <p className="font-semibold">{idx + 1}</p>
+                                        <i className="fa-solid fa-caret-up text-main mt-[-2px]"></i>
+                                    </div>
+                                    <img className="w-[40px] h-[40px] object-cover" src={track.album.images[2].url} alt="" />
+                                    <div>
+                                        <p className=" font-semibold text-small-1">{track.album.name}</p>
+                                        <div className="flex gap-2 items-center mt-1">
+                                            <i className="fa-solid fa-cloud-arrow-down text-main"></i>
+                                            <p className="text-small-2 text-white">{track.artists[0].name}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
 
@@ -139,55 +99,19 @@ const Search = () => {
             <div className="mt-6">
                 <p className="text-title font-semibold">Discoveries</p>
                 <div className="overflow-scroll noScroll">
-                    <div className="mt-6 gap-x-3  gap-y-2 container-grid">
-                        <div className="rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
-                        <div className=" rounded-lg overflow-hidden">
-                            <div className="pt-[80%] relative">
-                                <img className="absolute top-0 left-0 w-full h-full object-cover" src="https://images.unsplash.com/photo-1553095066-5014bc7b7f2d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2FsbCUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" alt="" />
-                                <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">Made for you</div>
-                            </div>
-                        </div>
+                    <div className="mt-6 gap-x-4  gap-y-4 container-grid">
+                        {
+                            dataDiscoveries?.tracks?.map((track: any, idx: any) => {
+                                return (
+                                    <div key={idx} className="rounded-lg overflow-hidden">
+                                        <div className="pt-[80%] relative">
+                                            <img className="absolute top-0 left-0 w-full h-full object-cover" src={track.album.images[1].url} alt="" />
+                                            {/* <div className="bg-[#00000036] px-4 py-1 absolute bottom-0 left-0 right-0 text-center">{track.name}</div> */}
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>

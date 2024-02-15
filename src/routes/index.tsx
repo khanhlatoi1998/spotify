@@ -1,3 +1,4 @@
+import MoreTemplate from "../components/MoreTemplate";
 import AudioSong from "../pages/AudioSong";
 import HomePage from "../pages/HomePage";
 import Search from "../pages/Search";
@@ -12,7 +13,11 @@ export const routes = [
         element: <Search />
     },
     {
-        path: '/playlist',
+        path: '/audiosong',
         element: <AudioSong />
+    },
+    {
+        path: '/more',
+        element: <MoreTemplate />
     }
 ];

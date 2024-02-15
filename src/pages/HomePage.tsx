@@ -1,36 +1,37 @@
-import { useEffect } from "react";
-import Artists from "../components/Artists";
+import { useEffect, useState } from "react";
 import Popular from "../components/Popular";
-import TopRate from "../components/TopRate";
+import MyPlaylists from "../components/MyPlaylists";
+import musicServices from "../api/musicServices";
+import ArtistItem from "../components/ArtistItem";
+import ItemSong from "../components/ItemSong";
+import PlaylistsCategory from "../components/PlaylistsCategory";
 
 const HomePage = () => {
-
-    const clientID = "773661d2f4b742b89a47794a9eadbe59";
-    const clientSecret = "4d9e7d512e6c4d7eb6e46938ddc628fd";
-    const token = 'BQCijYz5xWH_xBWT0CqvK6TnCMZZ7S15ti7l1tfYtCyBAXKGGXGKsw2QvcD_CyAmO2JdDY7EHhD5_hlhxfCYExsUyiE4tuVgrxPnjX4w0RdyaU6BFi8_XR9EsMPBp6dFcx4J8CPJuFP0PICpkkT1ggFirLvMglQHgKOS2LFvVrwCr1IwXlPxxb55B4x-KQWeBXWY-M4hfjtuFsQpW57jx740pHJIaLUbnHAUC6g9EfrhSQ2GMvCNDhap5bXuAg7UnWCORidxKNDNe5m6AFQ-m4U7';
-    const id = "31oyyfvngktz2bfwsbqoplcs243m";
-    const playlists = ["7JlT1ltFiW6QKD0gqsc8ka"];
-    // const enpoint = "https://api.spotify.com/v1/browse/categories/0JQ5DAqbMKFLIOWOrpNSUR/playlists"
-    const enpoint = "https://api.spotify.com/v1/users/31oyyfvngktz2bfwsbqoplcs243m/playlists?offset=0&limit=20"
-
+    const [popular, setPopular] = useState<any>([]);
+    const [myPlaylists, setMyPlaylists] = useState<any>([]);
+    const params = {
+        offset: 0,
+        limit: 10
+    };
+    const category = 'toplists';
     useEffect(() => {
-        const authPa = {
-            method: 'GET',
-            headers: {
-                // "Content-Type": "application/x-www-form-urlencoded",
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
-            },
-            // body: "grant_type=client_credentials&client_id=" + clientID + "&client_secret=" + clientSecret
-        }
-
-        fetch(enpoint, authPa)
-            .then(result => result.json())
-            .then(res => console.log(res))
-
-        
+        musicServices.getCategoriesPlaylists(category, params)
+            .then(res => {
+                res.playlists.items.forEach((element: any) => {
+                    // console.log(element.name)
+                });
+                setPopular(res.playlists.items)
+            });
+        musicServices.getCurrentUsersPlaylists(params)
+            .then(res => {
+                musicServices.getPlayLists(res[0].id, params)
+                .then(res => {
+                    setMyPlaylists(res.tracks.items)
+                })
+                .catch(err => {})
+            })
+            .catch(err => { })
     }, []);
-
 
     return (
         <section>
@@ -49,9 +50,10 @@ const HomePage = () => {
                     <div className="w-[7px] h-[7px] bg-[red] rounded-full absolute left-[65%] top-0"></div>
                 </div>
             </div>
-            <Popular />
-            <Artists />
-            <TopRate />
+            <Popular popular={popular} />
+            <PlaylistsCategory category="Chill" />
+            <PlaylistsCategory category="Kpop" />
+            <MyPlaylists myPlaylists={myPlaylists}/>
         </section>
     )
 }
