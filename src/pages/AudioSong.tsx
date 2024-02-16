@@ -1,4 +1,14 @@
+import { useSelector } from "react-redux";
+import MyPlaylistsItem from '../components/MyPlaylistsItem';
+import { useState } from "react";
+
+
+
 const AudioSong = () => {
+    const playLitstCurrentUser = useSelector((state: any) => state.sliceMusicServices);
+    const [controll, setControll] = useState<string>('playlistsCurentUser');
+    console.log(playLitstCurrentUser)
+
     return (
         <div>
             <div className="flex items-center justify-between mt-8">
@@ -53,11 +63,20 @@ const AudioSong = () => {
                 <p>LỜI NHẠC</p>
                 <p>LIÊN QUAN</p>
             </div>
-            <div className="mt-6">
+            <div className={`mt-6 ${controll === 'lyric' ? 'block' : 'hidden'}`} >
                 {/* <p className="text-title font-semibold">Lời bài hát</p> */}
                 <p className="mt-3 opacity-opa-1 ml-1 pb-2">
                     Được dịch từ tiếng Anh-Cacbua xi măng là một loại vật liệu cứng được sử dụng rộng rãi cho cá d asdasd asda sd ac dụng cụ cắt, cũng như trong các ứng dụng công nghiệp khác. Nó bao gồm các hạt cacbua mịn được kết dính thành hỗn hợp bằng kim loại kết dính. Cacbua xi măng thường sử dụng cacbua vonfram, cacbua titan hoặc cacbua tantali làm cốt liệu. Wikipedia (tiếng Anh)
                 </p>
+            </div>
+            <div className={`mt-6 flex flex-col gap-2 h-[340px] overflow-y-scroll noScroll ${controll === 'playlistsCurentUser' ? 'block' : 'hidden'}`} >
+                {
+                    playLitstCurrentUser?.map((track: any, idx: any) => {
+                        return (
+                            <MyPlaylistsItem track={track} key={idx} />
+                        )
+                    })
+                }
             </div>
         </div>
     );

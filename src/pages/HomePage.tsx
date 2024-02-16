@@ -5,8 +5,11 @@ import musicServices from "../api/musicServices";
 import ArtistItem from "../components/ArtistItem";
 import ItemSong from "../components/ItemSong";
 import PlaylistsCategory from "../components/PlaylistsCategory";
+import { useDispatch } from "react-redux";
+import { getPlaylists } from "../redux/sliceMusicService";
 
 const HomePage = () => {
+    const disPatch = useDispatch();
     const [popular, setPopular] = useState<any>([]);
     const [myPlaylists, setMyPlaylists] = useState<any>([]);
     const params = {
@@ -26,7 +29,9 @@ const HomePage = () => {
             .then(res => {
                 musicServices.getPlayLists(res[0].id, params)
                 .then(res => {
-                    setMyPlaylists(res.tracks.items)
+                    setMyPlaylists(res.tracks.items);
+                    console.log(res.tracks.items)
+                    disPatch(getPlaylists(res.tracks.items));
                 })
                 .catch(err => {})
             })

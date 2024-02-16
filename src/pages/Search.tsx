@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import BottomNav from "../components/BottomNav";
 import musicServices from "../api/musicServices";
+import { useSelector } from "react-redux";
 
 const Search = () => {
     const { data: dataRecommendation } = useQuery({
