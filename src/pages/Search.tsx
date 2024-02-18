@@ -67,10 +67,10 @@ const Search = () => {
                         Top Songs
                         <i className="fa-solid fa-fire-flame-curved text-[#E02D2D] ml-2"></i>
                     </div>
-                    <a href="/categories" className="text-main">
+                    {/* <a href="/categories" className="text-main">
                         More
                         <span><i className="fa-solid fa-angle-right ml-2"></i></span>
-                    </a>
+                    </a> */}
                 </div>
                 <div className="mt-3 flex flex-col gap-3 h-[258px] overflow-y-scroll noScroll">
                     {

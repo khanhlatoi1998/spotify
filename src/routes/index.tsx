@@ -1,4 +1,4 @@
-import MoreTemplate from "../components/MoreTemplate";
+import MoreTemplate from "../pages/MoreTemplate";
 import AudioSong from "../pages/AudioSong";
 import HomePage from "../pages/HomePage";
 import Search from "../pages/Search";
@@ -13,11 +13,11 @@ export const routes = [
         element: <Search />
     },
     {
-        path: '/audiosong',
+        path: '/audiosong/:id',
         element: <AudioSong />
     },
     {
-        path: '/more',
+        path: '/more/:category',
         element: <MoreTemplate />
     }
 ];

@@ -26,7 +26,7 @@ const musicServices = {
         const data: any = await axiosClient.get(url, { headers });
         return data.items;
     },
-    getCategoriesPlaylists: async (category: string, params: ParamsType) => {
+    getCategoriesPlaylists: async (category: string | undefined, params: ParamsType) => {
         let url = `v1/browse/categories/${category}/playlists?offset=${params.offset}&limit=${params.limit}`;
         const token = await authParameters.getToken().then(res => res.access_token);
         const headers = {
@@ -65,7 +65,8 @@ const musicServices = {
         };
         const data: any = await axiosClient.get(url, { headers });
         return data;
-    }
+    },
+
 }
 
 export default musicServices;

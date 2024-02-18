@@ -8,7 +8,7 @@ const TopRate: React.FC<any> = ({myPlaylists}) => {
                 {
                     myPlaylists?.map((track: any,  idx: any) => {
                         return (
-                            <MyPlaylistsItem track={track} key={idx}/>
+                            <MyPlaylistsItem track={track ? track.track : track} key={idx}/>
                         )
                     })
                 }

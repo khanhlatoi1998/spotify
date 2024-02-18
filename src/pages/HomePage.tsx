@@ -10,21 +10,12 @@ import { getPlaylists } from "../redux/sliceMusicService";
 
 const HomePage = () => {
     const disPatch = useDispatch();
-    const [popular, setPopular] = useState<any>([]);
     const [myPlaylists, setMyPlaylists] = useState<any>([]);
     const params = {
         offset: 0,
         limit: 10
     };
-    const category = 'toplists';
     useEffect(() => {
-        musicServices.getCategoriesPlaylists(category, params)
-            .then(res => {
-                res.playlists.items.forEach((element: any) => {
-                    // console.log(element.name)
-                });
-                setPopular(res.playlists.items)
-            });
         musicServices.getCurrentUsersPlaylists(params)
             .then(res => {
                 musicServices.getPlayLists(res[0].id, params)
@@ -55,7 +46,7 @@ const HomePage = () => {
                     <div className="w-[7px] h-[7px] bg-[red] rounded-full absolute left-[65%] top-0"></div>
                 </div>
             </div>
-            <Popular popular={popular} />
+            <Popular />
             <PlaylistsCategory category="Chill" />
             <PlaylistsCategory category="Kpop" />
             <MyPlaylists myPlaylists={myPlaylists}/>

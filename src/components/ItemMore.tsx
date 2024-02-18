@@ -1,11 +1,15 @@
-const ItemMore = () => {
+import { NavLink } from "react-router-dom";
+
+const ItemMore: React.FC<any> = ({track}) => {
+
+    
     return (
-        <div className="w-full">
-            <div className="relative pt-[82%]">
-                <img className="rounded-md absolute top-0 left-0 object-cover  w-full h-full"  src="https://i.scdn.co/image/ab67706f00000002b8d4b3c31e3c26dde1ec3917" alt="" />
+        <NavLink to={`/audiosong/${track?.id || track?.track?.id}`} className="w-full">
+            <div className="relative pt-[80%]">
+                <img className="rounded-md absolute top-0 left-0 object-cover w-full h-full"  src={track.images[0].url} alt="" />
             </div>
             <p></p> 
-        </div>
+        </NavLink>
     )
 };
 

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";import musicServices from "../api/musicServices";
 import ItemSong from "./ItemSong";
+import { NavLink } from "react-router-dom";
 
 
 interface Props {
@@ -16,20 +17,21 @@ const PlaylistsCategory: React.FC<Props> = (props) => {
         })
     });
 
+
     return (
         <div className="mt-4">
         <div className="flex items-center justify-between">
             <p className="font-semibold text-title capitalize">{props.category}</p>
-            <a href="/categories" className="text-main">
+            <NavLink to={`/more/${props.category}`} className="text-main">
                 More
                 <span><i className="fa-solid fa-angle-right ml-2"></i></span>
-            </a>
+            </NavLink>
         </div>
         <div className="flex mt-4 overflow-x-scroll noScroll gap-4">
             {
-                data?.playlists?.items?.map((item: any, idx: number) => {
+                data?.playlists?.items?.map((track: any, idx: number) => {
                     return (
-                        <ItemSong key={idx} item={item}/>
+                        <ItemSong key={idx} track={track}/>
                     )
                 })
             }
