@@ -27,11 +27,6 @@ const MoreTemplate = () => {
                     })
                 }
             </div>
-            <div>
-            <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX9tPFwDMOaN1" width="300" height="380"  allow="encrypted-media"></iframe>
-            <iframe src="https://open.spotify.com/embed/track/3Y3nRbS2YvT8LsYxvDylny" width="300" height="380"  allow="encrypted-media"></iframe>
-
-            </div>
         </div>
     )
 };

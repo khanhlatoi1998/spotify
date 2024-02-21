@@ -21,7 +21,7 @@ const HomePage = () => {
                 musicServices.getPlayLists(res[0].id, params)
                 .then(res => {
                     setMyPlaylists(res.tracks.items);
-                    console.log(res.tracks.items)
+                    // console.log(res.tracks.items)
                     disPatch(getPlaylists(res.tracks.items));
                 })
                 .catch(err => {})

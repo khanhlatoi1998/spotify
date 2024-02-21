@@ -16,8 +16,18 @@ const musicServices = {
         const data = await axiosClient.get(url, { headers });
         return data;
     },
-    getCurrentUsersPlaylists: async (params: object) => {
-        let url = `v1/users/31oyyfvngktz2bfwsbqoplcs243m/playlists?offset=0&limit=20`;
+    getTrack: async (id?: string) => {
+        let url = `v1/tracks/${id}`;
+        const token = await authParameters.getToken().then(res => res.access_token);
+        const headers = {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+        };
+        const data: any = await axiosClient.get(url, { headers });
+        return data;
+    },
+    getCurrentUsersPlaylists: async (params?: any) => {
+        let url = `v1/users/31oyyfvngktz2bfwsbqoplcs243m/playlists?offset=${params ? params.offset : 0}&limit=${params ? params.limit : 20}`;
         const token = await authParameters.getToken().then(res => res.access_token);
         const headers = {
             "Content-Type": "application/json",

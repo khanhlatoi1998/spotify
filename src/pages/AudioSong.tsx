@@ -6,21 +6,31 @@ import { useQuery } from "@tanstack/react-query";
 import musicServices from "../api/musicServices";
 import ItemSong from "../components/ItemSong";
 import ItemMore from "../components/ItemMore";
+import ReactPlayer from "react-player";
 
 
 
 const AudioSong = () => {
-    const playLitstCurrentUser = useSelector((state: any) => state.sliceMusicServices);
+    // const playLitstCurrentUser = useSelector((state: any) => state.sliceMusicServices);
     const [controll, setControll] = useState<string>('playlists');
     const { id } = useParams();
-    console.log(id)
-    const { data: dataPlaylists } = useQuery({
+
+    const { data: track } = useQuery({
         queryKey: [id],
+        queryFn: () => musicServices.getTrack(id)
+    });
+
+
+    const { data: dataPlaylists } = useQuery({
+        queryKey: ['dataPlaylists'],
         queryFn: () => musicServices.getPlayLists(id || '', {
             offset: 0,
             limit: 100
         })
-    })
+    });
+
+    console.log(track)
+
     const { data: dataRecommendation } = useQuery({
         queryKey: ['recommendation'],
         queryFn: () => musicServices.getRecommendation('seed_genres=pop%2Ckpop%2Cchill', {
@@ -29,7 +39,23 @@ const AudioSong = () => {
         })
     })
 
-    console.log(dataRecommendation?.tracks)
+    const { data: currentUsersPlaylists } = useQuery({
+        queryKey: ['playLitstCurrentUser', dataPlaylists],
+        queryFn: () => musicServices.getCurrentUsersPlaylists(),
+    });
+
+    const { data: dataPlaylistsOfMyPlaylists } = useQuery({
+        queryKey: ['dataPlaylistsOfMyPlaylists', currentUsersPlaylists],
+        queryFn: () => musicServices.getPlayLists(currentUsersPlaylists[0].id, {
+            offset: 0,
+            limit: 20
+        })
+    })
+    const playlists = dataPlaylists || dataPlaylistsOfMyPlaylists;
+    const duration_s = Math.floor(track?.duration_ms / 1000) + 1;
+    const minute = Math.floor(duration_s / 60);
+    const second = duration_s % 60; 
+    console.log(minute, second)
 
     return (
         <div>
@@ -43,15 +69,15 @@ const AudioSong = () => {
                 </span>
             </div>
             <div className="mx-auto rounded-lg overflow-hidden relative pt-[83%] mt-10">
-                <img className="max-w-[380px] object-cover absolute top-0 left-[50%] translate-x-[-50%] w-full h-full" src="https://media.viez.vn/prod/2023/1/26/image_4ee1bfd509.png" alt="" />
+                <img className="max-w-[380px] object-cover absolute top-0 left-[50%] translate-x-[-50%] w-full h-full" src={track ? track?.album?.images[0].url : playlists?.tracks?.items[0]?.track?.album?.images[0]?.url} alt="" />
             </div>
             <div className="flex items-center justify-between pt-8">
                 <span>
                     <i className="fa-solid fa-share-nodes text-2xl"></i>
                 </span>
                 <div className="text-center">
-                    <p className="text-title font-semibold">Havana</p>
-                    <p className="text-small-1 opacity-opa-1">Camila Cabello ft, Young Thug</p>
+                    <p className="text-title font-semibold">{playlists?.tracks?.items[0]?.track?.name}</p>
+                    <p className="text-small-1 opacity-opa-1">{playlists?.tracks?.items[0]?.track?.artists[0]?.name}</p>
                 </div>
                 <span>
                     <i className="fa-solid fa-heart text-2xl text-color-2"></i>
@@ -59,10 +85,14 @@ const AudioSong = () => {
             </div>
             <div className="mt-2 relative">
                 <img src="../images/image_03.png" className="w-full max-h-[200px] h-[140px] object-fill" alt="" />
-                <input type="range" className="w-[88%] mx-auto h-[4px] bg-main absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
-                <p className="absolute top-[58%] left-[6%] text-small-2">2:23</p>
-                <p className="absolute top-[58%] right-[6%] text-small-2">4:35</p>
+                <input type="range" min={0} max={duration_s || 200} className="w-[88%] mx-auto h-[4px] bg-main absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]" />
+                <p className="absolute top-[58%] left-[6%] text-small-2">0:00</p>
+                <p className="absolute top-[58%] right-[6%] text-small-2">{minute}:{second < 10 ? '0' + second : second}</p>
             </div>
+            <div className="flex justify-center items-start">
+                <iframe src={`https://open.spotify.com/embed/track/${track ? track?.id : playlists?.tracks?.items[0].track?.id}`} width="300" height="380" allow="encrypted-media"></iframe>
+            </div>
+
             <div className="flex items-center justify-between gap-2">
                 <div>
                     <i className="fa-regular fa-comment-dots text-xl"></i>
@@ -93,11 +123,12 @@ const AudioSong = () => {
             </div>
             <div className={`mt-6 flex flex-col gap-2 h-[340px] overflow-y-scroll noScroll ${controll === 'playlists' ? 'block' : 'hidden'}`} >
                 {
-                    playLitstCurrentUser?.map((track: any, idx: any) => {
+                    playlists?.tracks?.items?.map((track: any, idx: any) => {
                         return (
                             <MyPlaylistsItem key={idx} track={track.track ? track.track : track} />
                         )
                     })
+
                 }
             </div>
             <div className={`mt-6 flex flex-col gap-2 h-[340px] overflow-y-scroll noScroll ${controll === 'recommendation' ? 'block' : 'hidden'}`} >
